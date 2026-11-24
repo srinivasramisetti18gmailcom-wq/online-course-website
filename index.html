@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillSphere | Online Learning Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+ --bg:#f7f8fc;
+ --white:#fff;
+ --dark:#15172b;
+ --purple:#7357f6;
+ --blue:#36a9ff;
+ --muted:#74788b;
+ --border:#e9eaf2;
+ --gradient:linear-gradient(120deg,#7357f6,#36a9ff);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Inter,sans-serif;background:var(--bg);color:var(--dark)}
+a{text-decoration:none;color:inherit}
+button,input{font:inherit}
+button{cursor:pointer}
+.container{width:min(1150px,90%);margin:auto}
+section{padding:85px 0}
+.section-title{text-align:center;font-size:36px;font-weight:800;margin-bottom:12px}
+.section-title span{color:var(--purple)}
+.section-sub{text-align:center;color:var(--muted);margin-bottom:45px;line-height:1.7}
+
+/* NAVBAR */
+header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 3px 20px #1b174508}
+.navbar{height:76px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:25px;font-weight:900;color:var(--purple)}
+.logo span{color:var(--dark)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:14px;font-weight:600;color:#55596c;transition:.3s}
+.nav-links a:hover{color:var(--purple)}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.nav-btn{padding:11px 19px;border-radius:8px;border:0;font-weight:700;font-size:13px}
+.login{background:#f0edff;color:var(--purple)}
+.signup{background:var(--purple);color:white}
+.menu-btn{display:none;background:none;border:0;font-size:23px;color:var(--dark)}
+
+/* HERO */
+.hero{padding:80px 0 90px;background:linear-gradient(120deg,#f1efff,#edf7ff);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:55px;align-items:center}
+.hero-label{display:inline-block;padding:9px 16px;background:#fff;border-radius:30px;color:var(--purple);font-size:12px;font-weight:800;margin-bottom:25px}
+.hero h1{font-size:clamp(40px,5vw,62px);line-height:1.15;font-weight:900;letter-spacing:-2px;margin-bottom:22px}
+.hero h1 span{color:var(--purple)}
+.hero p{color:var(--muted);font-size:15px;line-height:1.9;max-width:500px}
+.hero-buttons{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+.btn{padding:15px 23px;border-radius:9px;border:0;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:10px;transition:.3s}
+.btn-primary{background:var(--purple);color:white;box-shadow:0 8px 20px #7357f633}
+.btn-primary:hover{background:#5d43df;transform:translateY(-4px)}
+.btn-white{background:white;color:var(--dark)}
+.btn-white:hover{transform:translateY(-4px)}
+.hero-image{position:relative;background:var(--gradient);border-radius:30px;padding:25px;min-height:330px;display:grid;place-items:center}
+.hero-image i{font-size:140px;color:white}
+.floating-card{position:absolute;background:white;padding:16px 20px;border-radius:13px;box-shadow:0 10px 35px #0002;font-size:13px;font-weight:700}
+.float-one{top:25px;left:-25px}
+.float-two{bottom:25px;right:-25px}
+.floating-card i{font-size:18px;color:var(--purple);margin-right:7px}
+
+/* STATS */
+.stats{background:white;padding:30px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;gap:20px}
+.stat h2{font-size:30px;color:var(--purple);margin-bottom:5px}
+.stat p{font-size:13px;color:var(--muted)}
+
+/* CATEGORIES */
+.categories-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.category{background:white;border:1px solid var(--border);padding:25px 15px;border-radius:15px;text-align:center;transition:.3s}
+.category:hover{transform:translateY(-7px);border-color:var(--purple);box-shadow:0 12px 30px #7357f615}
+.category i{width:55px;height:55px;border-radius:15px;display:grid;place-items:center;margin:0 auto 15px;background:#f0edff;color:var(--purple);font-size:23px}
+.category h3{font-size:15px;margin-bottom:7px}
+.category p{font-size:12px;color:var(--muted)}
+
+/* COURSE SEARCH */
+.course-tools{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:28px;flex-wrap:wrap}
+.search-box{display:flex;align-items:center;background:white;border:1px solid var(--border);padding:0 15px;border-radius:9px;flex:1;max-width:400px}
+.search-box i{color:var(--muted)}
+.search-box input{border:0;outline:0;padding:14px;width:100%;background:transparent}
+.filters{display:flex;gap:9px;flex-wrap:wrap}
+.filter-btn{padding:10px 16px;border:1px solid var(--border);background:white;border-radius:30px;color:#555;font-size:12px;font-weight:700}
+.filter-btn.active,.filter-btn:hover{background:var(--purple);color:white;border-color:var(--purple)}
+
+/* COURSE CARDS */
+.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.course-card{background:white;border:1px solid var(--border);border-radius:17px;overflow:hidden;transition:.35s}
+.course-card:hover{transform:translateY(-8px);box-shadow:0 18px 35px #20204b12}
+.course-image{height:185px;display:grid;place-items:center;color:white;font-size:65px;position:relative}
+.course-image.purple{background:linear-gradient(135deg,#7855f5,#b28bff)}
+.course-image.blue{background:linear-gradient(135deg,#2196f3,#64d0ff)}
+.course-image.orange{background:linear-gradient(135deg,#ff8848,#ffc16b)}
+.course-image.green{background:linear-gradient(135deg,#12a887,#70d9a5)}
+.course-image.pink{background:linear-gradient(135deg,#e84d98,#ff9bc8)}
+.course-image.dark{background:linear-gradient(135deg,#242b52,#6575a9)}
+.course-tag{position:absolute;top:15px;left:15px;background:white;color:var(--purple);font-size:10px;font-weight:800;padding:7px 11px;border-radius:20px}
+.course-content{padding:22px}
+.course-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:13px}
+.rating{color:#f5a623}
+.course-content h3{font-size:17px;line-height:1.5;margin-bottom:12px}
+.course-content p{font-size:12px;color:var(--muted);line-height:1.7}
+.instructor{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);margin-top:17px;padding-top:16px}
+.instructor span{font-size:12px;color:var(--muted)}
+.price{font-size:19px;font-weight:800;color:var(--purple)}
+.enroll-btn{width:100%;margin-top:16px;padding:12px;background:#f0edff;color:var(--purple);border:0;border-radius:8px;font-weight:800}
+.enroll-btn:hover{background:var(--purple);color:white}
+.no-results{grid-column:1/-1;text-align:center;padding:35px;color:var(--muted)}
+
+/* PROMO */
+.promo{background:linear-gradient(110deg,#7357f6,#399df9);border-radius:22px;padding:55px;color:white;display:flex;justify-content:space-between;align-items:center;gap:25px}
+.promo h2{font-size:32px;margin-bottom:13px}
+.promo p{font-size:14px;line-height:1.8;opacity:.9}
+.promo .btn{background:white;color:var(--purple);margin-top:22px}
+.promo i.big{font-size:110px;opacity:.8}
+
+/* INSTRUCTORS */
+.instructors-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.teacher{background:white;padding:30px;text-align:center;border:1px solid var(--border);border-radius:16px;transition:.3s}
+.teacher:hover{transform:translateY(-6px)}
+.teacher-avatar{width:85px;height:85px;border-radius:50%;background:linear-gradient(135deg,#7357f6,#36a9ff);margin:0 auto 17px;display:grid;place-items:center;color:white;font-size:32px}
+.teacher h3{font-size:17px;margin-bottom:7px}
+.teacher p{font-size:12px;color:var(--muted)}
+
+/* TESTIMONIALS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.review{padding:27px;background:white;border:1px solid var(--border);border-radius:15px}
+.review .stars{color:#f5a623;margin-bottom:16px}
+.review p{color:var(--muted);font-size:13px;line-height:1.9;margin-bottom:20px}
+.review strong{font-size:13px}
+
+/* NEWSLETTER */
+.newsletter{background:#eeebff;text-align:center;padding:65px 20px;border-radius:20px}
+.newsletter h2{font-size:30px;margin-bottom:12px}
+.newsletter p{font-size:13px;color:var(--muted);margin-bottom:25px}
+.newsletter form{display:flex;max-width:480px;margin:auto;background:white;padding:6px;border-radius:10px}
+.newsletter input{flex:1;min-width:0;padding:12px;border:0;outline:0}
+.newsletter button{padding:12px 18px;background:var(--purple);color:white;border:0;border-radius:8px;font-weight:700}
+
+/* FOOTER */
+footer{background:#15172b;color:white;padding:65px 0 20px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:35px;margin-bottom:40px}
+.footer-brand h2{font-size:25px;color:#a998ff;margin-bottom:15px}
+.footer-brand p{font-size:13px;line-height:1.9;color:#a6a8ba;max-width:300px}
+.footer-col h3{font-size:15px;margin-bottom:18px}
+.footer-col a{display:block;color:#a6a8ba;font-size:13px;margin-bottom:13px}
+.footer-col a:hover{color:#a998ff}
+.footer-bottom{border-top:1px solid #ffffff20;padding-top:20px;text-align:center;color:#a6a8ba;font-size:12px}
+
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:#101020a8;z-index:2000;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}
+.modal-box{background:white;color:var(--dark);width:min(450px,100%);padding:35px;border-radius:18px;position:relative}
+.modal-box h2{margin-bottom:12px}
+.modal-box p{color:var(--muted);font-size:14px;line-height:1.8}
+.modal-close{position:absolute;right:20px;top:15px;border:0;background:none;font-size:25px}
+.modal-box .btn{margin-top:20px}
+
+/* DARK MODE */
+body.dark-mode{
+ --bg:#111426;
+ --white:#1c2035;
+ --dark:#f5f5ff;
+ --muted:#b1b4c8;
+ --border:#343951;
+}
+body.dark-mode{background:var(--bg);color:var(--dark)}
+body.dark-mode header,body.dark-mode .stats,body.dark-mode .category,
+body.dark-mode .course-card,body.dark-mode .teacher,body.dark-mode .review,
+body.dark-mode .modal-box{background:#1c2035;color:#fff}
+body.dark-mode .hero{background:linear-gradient(120deg,#19152d,#12243a)}
+body.dark-mode .hero-label,body.dark-mode .floating-card{background:#292d48;color:white}
+body.dark-mode .search-box,body.dark-mode .filter-btn,
+body.dark-mode .newsletter{background:#242941;color:white}
+body.dark-mode .search-box input{color:white}
+body.dark-mode .category,body.dark-mode .course-card,
+body.dark-mode .teacher,body.dark-mode .review{border-color:var(--border)}
+body.dark-mode .course-image{color:white}
+body.dark-mode .newsletter input{background:transparent;color:white}
+body.dark-mode .promo .btn{background:white;color:#7357f6}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+ .hero-grid{grid-template-columns:1fr;text-align:center}
+ .hero p{margin:auto}
+ .hero-buttons{justify-content:center}
+ .hero-image{max-width:500px;width:100%;margin:20px auto}
+ .courses-grid,.instructors-grid,.testimonials-grid{grid-template-columns:repeat(2,1fr)}
+ .footer-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+ .nav-links{display:none;position:absolute;top:76px;left:0;width:100%;background:white;padding:25px;flex-direction:column;align-items:center;box-shadow:0 15px 20px #0001}
+ .nav-links.show{display:flex}
+ .menu-btn{display:block}
+ .nav-actions .login{display:none}
+ .categories-grid{grid-template-columns:repeat(2,1fr)}
+ .stats-grid{grid-template-columns:repeat(2,1fr)}
+ .promo{flex-direction:column;text-align:center;padding:35px 20px}
+ .promo h2{font-size:25px}
+}
+@media(max-width:520px){
+ section{padding:65px 0}
+ .section-title{font-size:29px}
+ .courses-grid,.instructors-grid,.testimonials-grid{grid-template-columns:1fr}
+ .course-tools{align-items:stretch}
+ .search-box{max-width:none}
+ .filters{justify-content:center}
+ .hero h1{font-size:42px}
+ .hero-image{min-height:250px}
+ .hero-image i{font-size:100px}
+ .floating-card{font-size:10px;padding:10px}
+ .float-one{left:-5px}
+ .float-two{right:-5px}
+ .footer-grid{grid-template-columns:1fr 1fr;gap:25px}
+ .footer-brand{grid-column:1/-1}
+ .newsletter form{flex-direction:column;gap:8px}
+ .newsletter button{width:100%}
+ .nav-actions .signup{padding:10px 12px;font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;transition:none!important}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header>
+ <div class="container navbar">
+  <a class="logo" href="#">Skill<span>Sphere.</span></a>
+
+  <ul class="nav-links" id="navLinks">
+   <li><a href="#home">Home</a></li>
+   <li><a href="#categories">Categories</a></li>
+   <li><a href="#courses">Courses</a></li>
+   <li><a href="#instructors">Instructors</a></li>
+   <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-actions">
+   <button class="nav-btn login" onclick="showMessage('Welcome to SkillSphere!')">Log In</button>
+   <button class="nav-btn signup" onclick="showMessage('Sign-up feature coming soon!')">Sign Up</button>
+   <button class="menu-btn" id="menuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
+   <button class="menu-btn" onclick="toggleTheme()" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
+  </div>
+ </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+ <div class="container hero-grid">
+  <div>
+   <span class="hero-label"><i class="fas fa-bolt"></i> LEARN SOMETHING NEW TODAY</span>
+   <h1>Unlock Your <span>Potential</span> With Online Learning.</h1>
+   <p>Discover expert-led courses, learn in-demand skills, and build the future you dream of. Your learning journey starts here!</p>
+   <div class="hero-buttons">
+    <a href="#courses" class="btn btn-primary">Explore Courses <i class="fas fa-arrow-right"></i></a>
+    <a href="#categories" class="btn btn-white">Browse Categories</a>
+   </div>
+  </div>
+
+  <div class="hero-image">
+   <i class="fas fa-graduation-cap"></i>
+   <div class="floating-card float-one"><i class="fas fa-star"></i> 4.9 Student Rating</div>
+   <div class="floating-card float-two"><i class="fas fa-users"></i> 10K+ Learners</div>
+  </div>
+ </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+ <div class="container stats-grid">
+  <div class="stat"><h2>10K+</h2><p>Happy Students</p></div>
+  <div class="stat"><h2>150+</h2><p>Online Courses</p></div>
+  <div class="stat"><h2>50+</h2><p>Expert Instructors</p></div>
+  <div class="stat"><h2>95%</h2><p>Success Rate</p></div>
+ </div>
+</div>
+
+<!-- CATEGORIES -->
+<section id="categories">
+ <div class="container">
+  <h2 class="section-title">Explore <span>Categories</span></h2>
+  <p class="section-sub">Find the right learning path for your career.</p>
+
+  <div class="categories-grid">
+   <div class="category"><i class="fas fa-code"></i><h3>Development</h3><p>25+ Courses</p></div>
+   <div class="category"><i class="fas fa-palette"></i><h3>Design</h3><p>18+ Courses</p></div>
+   <div class="category"><i class="fas fa-chart-line"></i><h3>Business</h3><p>20+ Courses</p></div>
+   <div class="category"><i class="fas fa-database"></i><h3>Data Science</h3><p>15+ Courses</p></div>
+   <div class="category"><i class="fas fa-camera"></i><h3>Photography</h3><p>12+ Courses</p></div>
+   <div class="category"><i class="fas fa-bullhorn"></i><h3>Marketing</h3><p>16+ Courses</p></div>
+   <div class="category"><i class="fas fa-robot"></i><h3>Artificial Intelligence</h3><p>10+ Courses</p></div>
+   <div class="category"><i class="fas fa-language"></i><h3>Languages</h3><p>14+ Courses</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses">
+ <div class="container">
+  <h2 class="section-title">Featured <span>Courses</span></h2>
+  <p class="section-sub">Learn from industry experts and upgrade your skills.</p>
+
+  <div class="course-tools">
+   <div class="search-box">
+    <i class="fas fa-search"></i>
+    <input id="courseSearch" type="search" placeholder="Search courses...">
+   </div>
+
+   <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="development">Development</button>
+    <button class="filter-btn" data-filter="design">Design</button>
+    <button class="filter-btn" data-filter="business">Business</button>
+   </div>
+  </div>
+
+  <div class="courses-grid" id="coursesGrid">
+
+   <article class="course-card" data-category="development">
+    <div class="course-image purple"><span class="course-tag">BESTSELLER</span><i class="fab fa-html5"></i></div>
+    <div class="course-content">
+     <div class="course-meta"><span>Development</span><span class="rating">★ 4.9</span></div>
+     <h3>Complete Web Development Bootcamp</h3>
+     <p>Master HTML, CSS, JavaScript and build professional websites.</p>
+     <div class="instructor"><span>By Alex Morgan</span><strong class="price">₹999</strong></div>
+     <button class="enroll-btn" data-course="Complete Web Development Bootcamp">Enroll Now</button>
+    </div>
+   </article>
+
+   <article class="course-card" data-category="design">
+    <div class="course-image pink"><span class="course-tag">POPULAR</span><i class="fas fa-pen-nib"></i></div>
+    <div class="course-content">
+     <div class="course-meta"><span>Design</span><span class="rating">★ 4.8</span></div>
+     <h3>UI/UX Design Masterclass</h3>
+     <p>Learn modern interface design, wireframes and prototypes.</p>
+     <div class="instructor"><span>By Sarah Johnson</span><strong class="price">₹799</strong></div>
+     <button class="enroll-btn" data-course="UI/UX Design Masterclass">Enroll Now</button>
+    </div>
+   </article>
+
+   <article class="course-card" data-category="development">
+    <div class="course-image blue"><span class="course-tag">NEW</span><i class="fab fa-python"></i></div>
+    <div class="course-content">
+     <div class="course-meta"><span>Development</span><span class="rating">★ 4.9</span></div>
+     <h3>Python Programming From Zero</h3>
+     <p>Learn Python fundamentals, logic, loops and projects.</p>
+     <div class="instructor"><span>By David Smith</span><strong class="price">₹699</strong></div>
+     <button class="enroll-btn" data-course="Python Programming From Zero">Enroll Now</button>
+    </div>
+   </article>
+
+   <article class="course-card" data-category="business">
+    <div class="course-image orange"><i class="fas fa-chart-pie"></i></div>
+    <div class="course-content">
+     <div class="course-meta"><span>Business</span><span class="rating">★ 4.7</span></div>
+     <h3>Digital Marketing Essentials</h3>
+     <p>Explore SEO, social media and online marketing strategies.</p>
+     <div class="instructor"><span>By Emma Wilson</span><strong class="price">₹599</strong></div>
+     <button class="enroll-btn" data-course="Digital Marketing Essentials">Enroll Now</button>
+    </div>
+   </article>
+
+   <article class="course-card" data-category="development">
+    <div class="course-image green"><i class="fas fa-database"></i></div>
+    <div class="course-content">
+     <div class="course-meta"><span>Development</span><span class="rating">★ 4.8</span></div>
+     <h3>Full Stack Development</h3>
+     <p>Understand frontend, backend, databases and deployment.</p>
+     <div class="instructor"><span>By James Lee</span><strong class="price">₹1299</strong></div>
+     <button class="enroll-btn" data-course="Full Stack Development">Enroll Now</button>
+    </div>
+   </article>
+
+   <article class="course-card" data-category="design">
+    <div class="course-image dark"><i class="fas fa-photo-film"></i></div>
+    <div class="course-content">
+     <div class="course-meta"><span>Design</span><span class="rating">★ 4.9</span></div>
+     <h3>Graphic Design Fundamentals</h3>
+     <p>Explore colors, typography, layouts and visual storytelling.</p>
+     <div class="instructor"><span>By Olivia Brown</span><strong class="price">₹499</strong></div>
+     <button class="enroll-btn" data-course="Graphic Design Fundamentals">Enroll Now</button>
+    </div>
+   </article>
+
+   <p class="no-results" id="noResults" hidden>No matching courses found. Try another search.</p>
+  </div>
+ </div>
+</section>
+
+<!-- PROMO -->
+<section>
+ <div class="container">
+  <div class="promo">
+   <div>
+    <h2>Upgrade Your Skills. Upgrade Your Future.</h2>
+    <p>Start learning today and take one step closer to your dream career.</p>
+    <a href="#courses" class="btn">Start Learning <i class="fas fa-arrow-right"></i></a>
+   </div>
+   <i class="fas fa-laptop-code big"></i>
+  </div>
+ </div>
+</section>
+
+<!-- INSTRUCTORS -->
+<section id="instructors">
+ <div class="container">
+  <h2 class="section-title">Meet Our <span>Instructors</span></h2>
+  <p class="section-sub">Learn directly from experienced professionals.</p>
+
+  <div class="instructors-grid">
+   <div class="teacher"><div class="teacher-avatar"><i class="fas fa-user"></i></div><h3>Alex Morgan</h3><p>Web Development Expert</p></div>
+   <div class="teacher"><div class="teacher-avatar"><i class="fas fa-user"></i></div><h3>Sarah Johnson</h3><p>UI/UX Designer</p></div>
+   <div class="teacher"><div class="teacher-avatar"><i class="fas fa-user"></i></div><h3>David Smith</h3><p>Python Developer</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+ <div class="container">
+  <h2 class="section-title">Student <span>Reviews</span></h2>
+  <p class="section-sub">What our learners say about us.</p>
+
+  <div class="testimonials-grid">
+   <div class="review"><div class="stars">★★★★★</div><p>"The courses are easy to understand. I learned web development from the basics."</p><strong>Rahul K.</strong></div>
+   <div class="review"><div class="stars">★★★★★</div><p>"Excellent platform with practical lessons and helpful instructors."</p><strong>Priya S.</strong></div>
+   <div class="review"><div class="stars">★★★★★</div><p>"I improved my programming skills and built my first project."</p><strong>Arjun M.</strong></div>
+  </div>
+ </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="contact">
+ <div class="container">
+  <div class="newsletter">
+   <h2>Join Our Learning Community</h2>
+   <p>Get course updates, learning tips and special announcements.</p>
+   <form id="newsletterForm">
+    <input type="email" id="newsletterEmail" placeholder="Enter your email address" required>
+    <button type="submit">Subscribe <i class="fas fa-arrow-right"></i></button>
+   </form>
+   <p id="newsletterMessage" style="margin-top:15px"></p>
+  </div>
+ </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+ <div class="container">
+  <div class="footer-grid">
+   <div class="footer-brand">
+    <h2>SkillSphere.</h2>
+    <p>Empowering learners around the world with quality online education and practical skills for the future.</p>
+   </div>
+   <div class="footer-col"><h3>Explore</h3><a href="#home">Home</a><a href="#courses">Courses</a><a href="#categories">Categories</a></div>
+   <div class="footer-col"><h3>Company</h3><a href="#instructors">Instructors</a><a href="#contact">Contact</a><a href="#home">About Us</a></div>
+   <div class="footer-col"><h3>Follow Us</h3><a href="https://instagram.com/">Instagram</a><a href="https://linkedin.com/">LinkedIn</a><a href="https://github.com/">GitHub</a></div>
+  </div>
+  <div class="footer-bottom">© 2026 SkillSphere. All Rights Reserved. | Designed for learners.</div>
+ </div>
+</footer>
+
+<!-- ENROLLMENT MODAL -->
+<div class="modal" id="enrollModal">
+ <div class="modal-box">
+  <button class="modal-close" id="closeModal" aria-label="Close">&times;</button>
+  <h2>Start Your Learning Journey!</h2>
+  <p id="selectedCourse">You selected a course.</p>
+  <p style="margin-top:10px">Enrollment is a demo in this version. Payment and student account services are not connected.</p>
+  <button class="btn btn-primary" id="confirmEnroll">Continue</button>
+ </div>
+</div>
+
+<script>
+// MOBILE MENU
+const menuBtn=document.getElementById('menuBtn');
+const navLinks=document.getElementById('navLinks');
+
+menuBtn.addEventListener('click',()=>{
+ navLinks.classList.toggle('show');
+});
+
+document.querySelectorAll('.nav-links a').forEach(link=>{
+ link.addEventListener('click',()=>navLinks.classList.remove('show'));
+});
+
+// SEARCH AND FILTER
+const searchInput=document.getElementById('courseSearch');
+const filterButtons=document.querySelectorAll('.filter-btn');
+const cards=document.querySelectorAll('.course-card');
+const noResults=document.getElementById('noResults');
+
+let activeFilter='all';
+
+function filterCourses(){
+ const search=searchInput.value.toLowerCase().trim();
+ let count=0;
+
+ cards.forEach(card=>{
+  const matchesCategory=activeFilter==='all'||card.dataset.category===activeFilter;
+  const matchesSearch=card.innerText.toLowerCase().includes(search);
+  const visible=matchesCategory&&matchesSearch;
+  card.style.display=visible?'block':'none';
+  if(visible)count++;
+ });
+
+ noResults.hidden=count!==0;
+}
+
+searchInput.addEventListener('input',filterCourses);
+
+filterButtons.forEach(button=>{
+ button.addEventListener('click',()=>{
+  filterButtons.forEach(btn=>btn.classList.remove('active'));
+  button.classList.add('active');
+  activeFilter=button.dataset.filter;
+  filterCourses();
+ });
+});
+
+// ENROLLMENT MODAL
+const modal=document.getElementById('enrollModal');
+const selectedCourse=document.getElementById('selectedCourse');
+
+document.querySelectorAll('.enroll-btn').forEach(button=>{
+ button.addEventListener('click',()=>{
+  selectedCourse.textContent='Selected course: '+button.dataset.course;
+  modal.classList.add('show');
+ });
+});
+
+document.getElementById('closeModal').addEventListener('click',()=>{
+ modal.classList.remove('show');
+});
+
+document.getElementById('confirmEnroll').addEventListener('click',()=>{
+ alert('Thanks for your interest! Real enrollment will be available after backend integration.');
+ modal.classList.remove('show');
+});
+
+modal.addEventListener('click',e=>{
+ if(e.target===modal)modal.classList.remove('show');
+});
+
+// DARK MODE
+function toggleTheme(){
+ document.body.classList.toggle('dark-mode');
+}
+
+// NEWSLETTER DEMO
+document.getElementById('newsletterForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const email=document.getElementById('newsletterEmail').value;
+ document.getElementById('newsletterMessage').textContent=
+ 'Thanks! '+email+' has been entered in this demo.';
+ e.target.reset();
+});
+
+// MESSAGE
+function showMessage(message){
+ alert(message);
+}
+</script>
+
+</body>
+</html>
